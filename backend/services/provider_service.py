@@ -173,7 +173,7 @@ async def list_providers(
 
 # ── Get single ─────────────────────────────────────────────────────────────────
 
-async def get_provider(provider_id: uuid.UUID) -> dict | None:
+async def get_provider(provider_id: uuid.UUID, tenant_id: uuid.UUID | None = None) -> dict | None:
     """
     Retrieve a single provider by its ID.
 
@@ -184,9 +184,10 @@ async def get_provider(provider_id: uuid.UUID) -> dict | None:
         Provider dictionary, or None if not found.
     """
     async with async_session() as session:
-        result = await session.execute(
-            select(Trainer).where(Trainer.id == provider_id)
-        )
+        query = select(Trainer).where(Trainer.id == provider_id)
+        if tenant_id is not None:
+            query = query.where(Trainer.tenant_id == tenant_id)
+        result = await session.execute(query)
         provider = result.scalar_one_or_none()
 
         if not provider:
@@ -198,7 +199,7 @@ async def get_provider(provider_id: uuid.UUID) -> dict | None:
 
 # ── Update ─────────────────────────────────────────────────────────────────────
 
-async def update_provider(provider_id: uuid.UUID, data: dict) -> dict | None:
+async def update_provider(provider_id: uuid.UUID, data: dict, tenant_id: uuid.UUID | None = None) -> dict | None:
     """
     Update allowed fields on an existing provider.
 
@@ -215,9 +216,10 @@ async def update_provider(provider_id: uuid.UUID, data: dict) -> dict | None:
         Updated provider dictionary, or None if the provider was not found.
     """
     async with async_session() as session:
-        result = await session.execute(
-            select(Trainer).where(Trainer.id == provider_id)
-        )
+        query = select(Trainer).where(Trainer.id == provider_id)
+        if tenant_id is not None:
+            query = query.where(Trainer.tenant_id == tenant_id)
+        result = await session.execute(query)
         provider = result.scalar_one_or_none()
 
         if not provider:
@@ -251,7 +253,7 @@ async def update_provider(provider_id: uuid.UUID, data: dict) -> dict | None:
 
 # ── Soft-delete ────────────────────────────────────────────────────────────────
 
-async def delete_provider(provider_id: uuid.UUID) -> bool:
+async def delete_provider(provider_id: uuid.UUID, tenant_id: uuid.UUID | None = None) -> bool:
     """
     Soft-delete a provider by setting ``is_active=False``.
 
@@ -265,9 +267,10 @@ async def delete_provider(provider_id: uuid.UUID) -> bool:
         True if the provider was found and deactivated, False otherwise.
     """
     async with async_session() as session:
-        result = await session.execute(
-            select(Trainer).where(Trainer.id == provider_id)
-        )
+        query = select(Trainer).where(Trainer.id == provider_id)
+        if tenant_id is not None:
+            query = query.where(Trainer.tenant_id == tenant_id)
+        result = await session.execute(query)
         provider = result.scalar_one_or_none()
 
         if not provider:

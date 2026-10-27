@@ -1,4 +1,4 @@
-"""
+﻿"""
 PlatformToolProvider — the built-in tools that power every tenant.
 
 This module owns:
@@ -886,10 +886,10 @@ class PlatformToolProvider:
             return await self._book_appointment(args, tenant_ctx, call_id, session, is_test, t0)
 
         elif name == "reschedule_appointment":
-            return await self._reschedule_appointment(args, tenant_ctx, call_id, session, t0)
+            return await self._reschedule_appointment(args, tenant_ctx, call_id, session, is_test, t0)
 
         elif name == "cancel_appointment":
-            return await self._cancel_appointment(args, tenant_ctx, call_id, session, t0)
+            return await self._cancel_appointment(args, tenant_ctx, call_id, session, is_test, t0)
 
         elif name == "escalate_to_human":
             return await self._escalate_to_human(args, tenant_ctx, call_id, session)
@@ -1757,7 +1757,7 @@ class PlatformToolProvider:
         }
 
     async def _reschedule_appointment(
-        self, args: dict, tenant_ctx: Any, call_id: str, session: dict | None, t0: float
+        self, args: dict, tenant_ctx: Any, call_id: str, session: dict | None, is_test: bool, t0: float
     ) -> dict:
         booking_uid = args.get("booking_uid", "")
         new_slot_time = args.get("new_slot_time", "")
@@ -1904,7 +1904,7 @@ class PlatformToolProvider:
         return {"success": False, "error": "Failed to reschedule."}
 
     async def _cancel_appointment(
-        self, args: dict, tenant_ctx: Any, call_id: str, session: dict | None, t0: float
+        self, args: dict, tenant_ctx: Any, call_id: str, session: dict | None, is_test: bool, t0: float
     ) -> dict:
         booking_uid = args.get("booking_uid", "")
         if not booking_uid:

@@ -1,0 +1,166 @@
+{
+  "benchmark_type": "tenant_isolation_security",
+  "dataset_version": "v1.0",
+  "timestamp": "2026-10-27T19:55:18.774696+00:00",
+  "total_scenarios": 22,
+  "scenarios_passed": 22,
+  "scenarios_failed": 0,
+  "isolation_pass_rate_percent": 100.0,
+  "total_duration_seconds": 0.0962,
+  "scenarios": [
+    {
+      "test_name": "test_01_gym_a_cannot_read_gym_b_trainers",
+      "description": "Gym A query must not return Gym B trainers.",
+      "passed": true,
+      "duration_ms": 2.81,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_02_gym_a_cannot_update_gym_b_trainer",
+      "description": "Gym A cannot modify Gym B trainer details.",
+      "passed": true,
+      "duration_ms": 2.17,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_03_gym_a_cannot_delete_gym_b_trainer",
+      "description": "Gym A cannot soft-delete Gym B trainer.",
+      "passed": true,
+      "duration_ms": 1.83,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_04_gym_a_cannot_read_gym_b_appointments",
+      "description": "Gym A API cannot list appointments belonging to Gym B.",
+      "passed": true,
+      "duration_ms": 26.27,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_05_gym_a_cannot_view_gym_b_appointment_history",
+      "description": "Gym A cannot view status history for Gym B's appointment (403 forbidden).",
+      "passed": true,
+      "duration_ms": 26.1,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_06_gym_a_cannot_patch_gym_b_appointment",
+      "description": "Gym A cannot modify notes or status of Gym B's appointment.",
+      "passed": true,
+      "duration_ms": 2.19,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_07_gym_a_cannot_cancel_gym_b_appointment",
+      "description": "Gym A cannot cancel Gym B's appointment via endpoint.",
+      "passed": true,
+      "duration_ms": 2.03,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_08_gym_a_cannot_read_gym_b_callers",
+      "description": "Caller queries are strictly scoped by tenant_id.",
+      "passed": true,
+      "duration_ms": 9.34,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_09_gym_a_cannot_read_gym_b_call_logs",
+      "description": "Call records are partitioned by tenant_id.",
+      "passed": true,
+      "duration_ms": 0.03,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_10_gym_a_cannot_retrieve_gym_b_knowledge_base",
+      "description": "Gym A context cannot see Gym B proprietary FAQs.",
+      "passed": true,
+      "duration_ms": 0.47,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_11_gym_a_cannot_retrieve_gym_b_pricing_services",
+      "description": "Gym A context cannot see Gym B pricing information.",
+      "passed": true,
+      "duration_ms": 0.02,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_12_gym_a_cannot_access_gym_b_waitlist",
+      "description": "Gym A cannot query waitlist entries belonging to Gym B.",
+      "passed": true,
+      "duration_ms": 2.15,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_13_gym_a_cannot_promote_or_mutate_gym_b_waitlist",
+      "description": "Gym A cannot promote or mutate a waitlist record belonging to Gym B.",
+      "passed": true,
+      "duration_ms": 1.5,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_14_agent_tool_lookup_appointments_ignores_injected_tenant_id",
+      "description": "Platform tool 'lookup_caller_appointments' ignores forged tenant_id arg.",
+      "passed": true,
+      "duration_ms": 0.53,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_15_agent_tool_get_available_slots_ignores_foreign_trainer_id",
+      "description": "Platform tool ignores trainer id not belonging to the authenticated tenant.",
+      "passed": true,
+      "duration_ms": 15.17,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_16_agent_tool_get_office_info_returns_strictly_own_tenant",
+      "description": "Platform tool get_office_info builds summary only from caller tenant_ctx.",
+      "passed": true,
+      "duration_ms": 0.03,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_17_missing_tenant_context_handles_safely_without_leak",
+      "description": "Missing tenant context falls back to platform defaults without foreign data.",
+      "passed": true,
+      "duration_ms": 0.3,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_18_mismatched_or_forged_tenant_identity_rejected",
+      "description": "JWT authentication rejects tokens signed with wrong secret or forged claims.",
+      "passed": true,
+      "duration_ms": 0.86,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_19_cross_tenant_sms_credential_isolation",
+      "description": "SMS service resolves strictly the credentials of the provided tenant.",
+      "passed": true,
+      "duration_ms": 0.02,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_20_caller_phone_unique_constraint_is_composite_with_tenant",
+      "description": "Phone numbers are unique per tenant, allowing the same caller in multiple gyms.",
+      "passed": true,
+      "duration_ms": 0.04,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_21_appointment_patch_verifies_tenant_before_status_update",
+      "description": "Appointment update verifies tenant ownership before modifying status.",
+      "passed": true,
+      "duration_ms": 1.29,
+      "error_detail": null
+    },
+    {
+      "test_name": "test_22_database_query_tenant_scoping_enforced",
+      "description": "Verify that provider queries include Trainer.tenant_id == tenant_id in WHERE clause.",
+      "passed": true,
+      "duration_ms": 1.02,
+      "error_detail": null
+    }
+  ]
+}

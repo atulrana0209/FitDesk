@@ -81,7 +81,9 @@ async def cancel_waitlist_entry(
     logger.info("[Waitlist] Cancelling entry %s for tenant=%s", entry_id, current_user.slug)
     try:
         tenant_ctx = await tenant_service.resolve_by_id(current_user.id)
-        result = await waitlist_service.cancel_waitlist_entry(entry_id, tenant_ctx=tenant_ctx)
+        result = await waitlist_service.cancel_waitlist_entry(
+            entry_id, tenant_ctx=tenant_ctx, tenant_id=current_user.id
+        )
         if not result:
             raise HTTPException(status_code=404, detail="Waitlist entry not found.")
         return {"status": "cancelled", "entry_id": entry_id}
@@ -151,6 +153,7 @@ async def promote_waitlist_entry(
             scheduled_at=req.scheduled_at,
             tenant_ctx=tenant_ctx,
             force=req.force,
+            tenant_id=current_user.id,
         )
         if not result:
             raise HTTPException(

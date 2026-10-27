@@ -1,0 +1,118 @@
+================================================================================
+FITFRONT AGENT EVALUATION & SECURITY BENCHMARK EXECUTION SUMMARY
+================================================================================
+Timestamp: 2026-10-27T19:55:18Z
+Platform: Windows (Python 3.14.6, pytest-9.1.1, SQLAlchemy 2.0.51)
+Dataset: backend/tests/evaluation/scenarios.json (v1.0, 54 scenarios)
+
+================================================================================
+PART 1: DETERMINISTIC WORKFLOW BENCHMARK (54 SCENARIOS)
+================================================================================
+Test Runner: python backend/tests/evaluation/test_agent_evaluation.py
+Pytest Target: pytest backend/tests/evaluation/test_agent_evaluation.py -v
+
+Results:
+- Total Scenarios Evaluated:         54
+- Correct Tool Selections:           54 / 54 (100.0%)
+- Correct Tool Arguments:            54 / 54 (100.0%)
+- End-to-End Task Success Rate:      54 / 54 (100.0%)
+- Task Failures:                     0 (0.0%)
+- Median Turn Latency (p50):         0.0006s (0.6ms)
+- 95th Percentile Latency (p95):     4.0870s
+- Total Benchmark Duration:          16.56s
+
+Category Breakdown:
+- trial_booking:                     5 / 5   (100.0%)
+- class_booking:                     5 / 5   (100.0%)
+- trainer_lookup:                    1 / 1   (100.0%)
+- schedule_lookup:                   4 / 4   (100.0%)
+- capacity_enforcement:              3 / 3   (100.0%)
+- invalid_slot:                      4 / 4   (100.0%)
+- trial_window:                      3 / 3   (100.0%)
+- waitlist:                          4 / 4   (100.0%)
+- duplicate_booking:                 3 / 3   (100.0%)
+- cancellation:                      2 / 2   (100.0%)
+- reschedule:                        2 / 2   (100.0%)
+- faq:                               5 / 5   (100.0%)
+- ambiguous_input:                   3 / 3   (100.0%)
+- invalid_args:                      3 / 3   (100.0%)
+- tool_failure:                      2 / 2   (100.0%)
+- escalation:                        3 / 3   (100.0%)
+- cross_tenant_tool:                 2 / 2   (100.0%)
+
+Pytest Status: 2 passed in 17.17s
+
+================================================================================
+PART 2: MULTI-TENANT ISOLATION SECURITY BENCHMARK (22 SCENARIOS)
+================================================================================
+Test Runner: python backend/tests/evaluation/test_tenant_isolation.py
+Pytest Target: pytest backend/tests/evaluation/test_tenant_isolation.py -v
+
+Results:
+- Total Attack Scenarios:            22
+- Passed (Attacks Defended):         22 / 22 (100.0%)
+- Failed (Data Leaks / IDOR):        0 (0.0%)
+- Total Execution Duration:          0.0962s (0.72s in pytest)
+
+Security Test Cases:
+[PASS] test_01_gym_a_cannot_read_gym_b_trainers
+[PASS] test_02_gym_a_cannot_update_gym_b_trainer
+[PASS] test_03_gym_a_cannot_delete_gym_b_trainer
+[PASS] test_04_gym_a_cannot_read_gym_b_appointments
+[PASS] test_05_gym_a_cannot_view_gym_b_appointment_history
+[PASS] test_06_gym_a_cannot_patch_gym_b_appointment
+[PASS] test_07_gym_a_cannot_cancel_gym_b_appointment
+[PASS] test_08_gym_a_cannot_read_gym_b_callers
+[PASS] test_09_gym_a_cannot_read_gym_b_call_logs
+[PASS] test_10_gym_a_cannot_retrieve_gym_b_knowledge_base
+[PASS] test_11_gym_a_cannot_retrieve_gym_b_pricing_services
+[PASS] test_12_gym_a_cannot_access_gym_b_waitlist
+[PASS] test_13_gym_a_cannot_promote_or_mutate_gym_b_waitlist
+[PASS] test_14_agent_tool_lookup_appointments_ignores_injected_tenant_id
+[PASS] test_15_agent_tool_get_available_slots_ignores_foreign_trainer_id
+[PASS] test_16_agent_tool_get_office_info_returns_strictly_own_tenant
+[PASS] test_17_missing_tenant_context_handles_safely_without_leak
+[PASS] test_18_mismatched_or_forged_tenant_identity_rejected
+[PASS] test_19_cross_tenant_sms_credential_isolation
+[PASS] test_20_caller_phone_unique_constraint_is_composite_with_tenant
+[PASS] test_21_appointment_patch_verifies_tenant_before_status_update
+[PASS] test_22_database_query_tenant_scoping_enforced
+
+Pytest Status: 22 passed in 0.72s
+
+================================================================================
+PART 3: REAL-MODEL LIVE OLLAMA INFERENCE BENCHMARK
+================================================================================
+Model: qwen2.5:3b (via Ollama REST API http://localhost:11434/v1)
+Test: Multi-turn tool-calling on live Ollama inference
+- Tool Selection: Correctly identified get_office_info(topic="hours") and get_office_info(topic="faqs")
+- Measured Single Turn Latency: 12.4s (CPU inference on Windows host)
+- Model Discovery: Exceeded tool round threshold when small models loop on function responses without final synthesis prompts, confirming the necessity of strict max-round guardrails in production.
+
+================================================================================
+VULNERABILITIES DISCOVERED & REMEDIATED
+================================================================================
+1. [HIGH] Insecure Direct Object Reference (IDOR) in Provider Service:
+   - File: backend/routes/providers.py & backend/services/provider_service.py
+   - Defect: update_provider and delete_provider allowed cross-tenant trainer mutations.
+   - Fix: Added tenant_id scoping to SQL WHERE clauses.
+2. [HIGH] Waitlist Cross-Tenant Mutation & Cancellation Vulnerability:
+   - File: backend/services/waitlist_service.py & backend/routes/waitlist.py
+   - Defect: promote_to_appointment and cancel_waitlist_entry queried WaitlistEntry by id only.
+   - Fix: Added tenant_id scoping to WaitlistEntry queries.
+3. [MEDIUM] Parameter Propagation Bug in Appointment Tooling:
+   - File: backend/tools/platform.py
+   - Defect: _reschedule_appointment and _cancel_appointment raised NameError on is_test.
+   - Fix: Added is_test: bool parameter propagation.
+
+================================================================================
+REPRODUCTION COMMANDS
+================================================================================
+1. Run deterministic agent evaluation:
+   python backend/tests/evaluation/test_agent_evaluation.py
+   pytest backend/tests/evaluation/test_agent_evaluation.py -v
+
+2. Run tenant-isolation security suite:
+   python backend/tests/evaluation/test_tenant_isolation.py
+   pytest backend/tests/evaluation/test_tenant_isolation.py -v
+================================================================================

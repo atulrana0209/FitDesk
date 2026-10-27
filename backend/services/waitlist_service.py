@@ -706,8 +706,9 @@ async def confirm_waitlist_booking(
 
 
 async def cancel_waitlist_entry(
-    entry_id: uuid.UUID,
+    entry_id: uuid.UUID | str,
     tenant_ctx: Any | None = None,
+    tenant_id: uuid.UUID | None = None,
 ) -> bool:
     """
     Cancel a specific waitlist entry by setting its status to CANCELLED.
@@ -715,14 +716,20 @@ async def cancel_waitlist_entry(
     Args:
         entry_id: The UUID of the waitlist entry to cancel.
         tenant_ctx: Optional TenantContext for sending the caller SMS.
+        tenant_id: Optional tenant UUID to enforce multi-tenant boundary.
 
     Returns:
         True if the entry was found and cancelled, False otherwise.
     """
     async with async_session() as session:
-        result = await session.execute(
-            select(WaitlistEntry).where(WaitlistEntry.id == entry_id)
-        )
+        entry_uuid = uuid.UUID(str(entry_id)) if not isinstance(entry_id, uuid.UUID) else entry_id
+        target_tenant_id = tenant_id or (getattr(tenant_ctx, "tenant_id", None) if tenant_ctx else None)
+
+        query = select(WaitlistEntry).where(WaitlistEntry.id == entry_uuid)
+        if target_tenant_id is not None:
+            query = query.where(WaitlistEntry.tenant_id == target_tenant_id)
+
+        result = await session.execute(query)
         entry = result.scalars().first()
 
         if not entry:
@@ -895,10 +902,11 @@ async def find_promote_conflicts(
 
 
 async def promote_to_appointment(
-    entry_id: uuid.UUID,
+    entry_id: uuid.UUID | str,
     scheduled_at: str,
     tenant_ctx: Any | None = None,
     force: bool = False,
+    tenant_id: uuid.UUID | None = None,
 ) -> dict | None:
     """
     Promote a waitlist entry to a booked appointment.
@@ -915,6 +923,7 @@ async def promote_to_appointment(
             nudging the stored timestamp by a few seconds so the partial
             unique index doesn't fire. Use only when admin has explicitly
             confirmed the double-book in the UI.
+        tenant_id: Optional tenant UUID to enforce multi-tenant boundary.
 
     Returns:
         Dict with appointment + entry info on success, or None on failure.
@@ -923,9 +932,14 @@ async def promote_to_appointment(
     from backend.services import calendar_service
 
     async with async_session() as session:
-        result = await session.execute(
-            select(WaitlistEntry).where(WaitlistEntry.id == entry_id)
-        )
+        entry_uuid = uuid.UUID(str(entry_id)) if not isinstance(entry_id, uuid.UUID) else entry_id
+        target_tenant_id = tenant_id or (getattr(tenant_ctx, "tenant_id", None) if tenant_ctx else None)
+
+        query = select(WaitlistEntry).where(WaitlistEntry.id == entry_uuid)
+        if target_tenant_id is not None:
+            query = query.where(WaitlistEntry.tenant_id == target_tenant_id)
+
+        result = await session.execute(query)
         entry = result.scalars().first()
 
         if not entry:

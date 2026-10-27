@@ -1,0 +1,82 @@
+name: FitFront CI & Evaluation Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    name: Deterministic Evaluation & Security Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: scheduler_ai
+          POSTGRES_USER: scheduler_user
+          POSTGRES_PASSWORD: scheduler_pass
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-timeout
+
+      - name: Run Core Regression Tests
+        env:
+          DATABASE_URL: "postgresql+asyncpg://scheduler_user:scheduler_pass@localhost:5433/scheduler_ai"
+          OFFICE_TIMEZONE: "America/Chicago"
+          DEMO_MODE: "true"
+          LOCAL_CHAT_MODE: "true"
+          PYTHONPATH: "."
+        run: |
+          python tests/test_recent_changes.py
+
+      - name: Run Deterministic Agent Evaluation Benchmark (54 Scenarios)
+        env:
+          DATABASE_URL: "postgresql+asyncpg://scheduler_user:scheduler_pass@localhost:5433/scheduler_ai"
+          OFFICE_TIMEZONE: "America/Chicago"
+          DEMO_MODE: "true"
+          LOCAL_CHAT_MODE: "true"
+          PYTHONPATH: "."
+        run: |
+          python backend/tests/evaluation/test_agent_evaluation.py
+          pytest backend/tests/evaluation/test_agent_evaluation.py -v
+
+      - name: Run Multi-Tenant Isolation Security Suite (22 Scenarios)
+        env:
+          DATABASE_URL: "postgresql+asyncpg://scheduler_user:scheduler_pass@localhost:5433/scheduler_ai"
+          OFFICE_TIMEZONE: "America/Chicago"
+          DEMO_MODE: "true"
+          LOCAL_CHAT_MODE: "true"
+          PYTHONPATH: "."
+        run: |
+          python backend/tests/evaluation/test_tenant_isolation.py
+          pytest backend/tests/evaluation/test_tenant_isolation.py -v
+
+      - name: Upload Evaluation Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fitfront-evaluation-reports
+          path: reports/fitfront-evaluation/

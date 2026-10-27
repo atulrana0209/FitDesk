@@ -1,0 +1,865 @@
+[
+    {
+        "id":  "EVAL-01",
+        "category":  "trial_booking",
+        "user_input":  "Hi, I would like to book a free trial personal training session for next Monday at 10:00 AM. My name is Alex Smith and phone is +15551234567.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Alex Smith",
+                              "phone":  "+15551234567",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-02T10:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-02",
+        "category":  "trial_booking",
+        "user_input":  "Can I schedule a trial session with trainer Marcus for next Tuesday at 2:00 PM? Name is Jordan Lee, phone +15552345678.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Jordan Lee",
+                              "phone":  "+15552345678",
+                              "date":  "2026-11-03",
+                              "time":  "14:00",
+                              "instructor":  "Marcus",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-03T14:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-03",
+        "category":  "trial_booking",
+        "user_input":  "I want to try out your gym with a trial session next Wednesday Nov 4 at 9am. Call me Chris Brown at +15553456789.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Chris Brown",
+                              "phone":  "+15553456789",
+                              "date":  "2026-11-04",
+                              "time":  "09:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-04T09:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-04",
+        "category":  "trial_booking",
+        "user_input":  "Book me a trial session on Thursday Nov 5 at 11:00 AM with Elena. Phone +15554567890, Taylor Swift.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Taylor Swift",
+                              "phone":  "+15554567890",
+                              "date":  "2026-11-05",
+                              "time":  "11:00",
+                              "instructor":  "Elena",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-05T11:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-05",
+        "category":  "trial_booking",
+        "user_input":  "I would love to book a first-time trial workout on Friday Nov 6 at 4:00 PM. Name is Morgan Diaz, phone +15555678901.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Morgan Diaz",
+                              "phone":  "+15555678901",
+                              "date":  "2026-11-06",
+                              "time":  "16:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-06T16:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-06",
+        "category":  "class_booking",
+        "user_input":  "Book a HIIT class for me on Monday Nov 2 at 8:00 AM. I am Sam Wilson, +15556789012.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Sam Wilson",
+                              "phone":  "+15556789012",
+                              "date":  "2026-11-02",
+                              "time":  "08:00",
+                              "appointment_type":  "hiit_class",
+                              "slot_time":  "2026-11-02T08:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-07",
+        "category":  "class_booking",
+        "user_input":  "I want to reserve a spot in the strength conditioning class next Tuesday Nov 3 at 5:00 PM. Name: Casey Jones, phone: +15557890123.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Casey Jones",
+                              "phone":  "+15557890123",
+                              "date":  "2026-11-03",
+                              "time":  "17:00",
+                              "appointment_type":  "strength_class",
+                              "slot_time":  "2026-11-03T17:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-08",
+        "category":  "class_booking",
+        "user_input":  "Please sign me up for Yoga Flow on Wednesday Nov 4 at 7:00 AM. I am Jamie Fox, +15558901234.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Jamie Fox",
+                              "phone":  "+15558901234",
+                              "date":  "2026-11-04",
+                              "time":  "07:00",
+                              "appointment_type":  "yoga_class",
+                              "slot_time":  "2026-11-04T07:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-09",
+        "category":  "class_booking",
+        "user_input":  "Can you register me for the Boxing conditioning class on Thursday Nov 5 at 6:00 PM? Robin Hood, +15559012345.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Robin Hood",
+                              "phone":  "+15559012345",
+                              "date":  "2026-11-05",
+                              "time":  "18:00",
+                              "appointment_type":  "boxing_class",
+                              "slot_time":  "2026-11-05T18:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-10",
+        "category":  "class_booking",
+        "user_input":  "Book a Pilates core session for Friday Nov 6 at 12:00 PM. Dana Scully, +15550123456.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Dana Scully",
+                              "phone":  "+15550123456",
+                              "date":  "2026-11-06",
+                              "time":  "12:00",
+                              "appointment_type":  "pilates_class",
+                              "slot_time":  "2026-11-06T12:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-11",
+        "category":  "trainer_lookup",
+        "user_input":  "What trainers do you have available at the gym?",
+        "expected_tool":  "get_providers",
+        "expected_args":  {
+
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-12",
+        "category":  "schedule_lookup",
+        "user_input":  "What slots are available on next Monday Nov 2?",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-13",
+        "category":  "schedule_lookup",
+        "user_input":  "Can you check what times trainer Marcus has open on Tuesday Nov 3?",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-03",
+                              "instructor":  "Marcus"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-14",
+        "category":  "schedule_lookup",
+        "user_input":  "Do you have any openings for personal training on Wednesday Nov 4 in the morning?",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-04",
+                              "time_preference":  "morning"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-15",
+        "category":  "schedule_lookup",
+        "user_input":  "What does your schedule look like for the upcoming week?",
+        "expected_tool":  "get_week_slots",
+        "expected_args":  {
+                              "start_date":  "2026-11-02"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-16",
+        "category":  "capacity_enforcement",
+        "user_input":  "Try booking into the fully booked 9:00 AM class on Nov 2 for John Doe +15551112222.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "John Doe",
+                              "phone":  "+15551112222",
+                              "date":  "2026-11-02",
+                              "time":  "09:00",
+                              "appointment_type":  "hiit_class",
+                              "slot_time":  "2026-11-02T09:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "capacity_full",
+        "should_succeed":  false,
+        "failure_reason":  "slot_capacity_exceeded",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-17",
+        "category":  "capacity_enforcement",
+        "user_input":  "Book spot for Jane at 9:00 AM on Nov 2 when capacity is 1 remaining.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Jane Roe",
+                              "phone":  "+15551113333",
+                              "date":  "2026-11-02",
+                              "time":  "09:00",
+                              "appointment_type":  "hiit_class",
+                              "slot_time":  "2026-11-02T09:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "capacity_1_left",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-18",
+        "category":  "capacity_enforcement",
+        "user_input":  "Second person booking into slot with only 1 capacity left should fail.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Bob Vance",
+                              "phone":  "+15551114444",
+                              "date":  "2026-11-02",
+                              "time":  "09:00",
+                              "appointment_type":  "hiit_class",
+                              "slot_time":  "2026-11-02T09:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "capacity_exceeded_on_second",
+        "should_succeed":  false,
+        "failure_reason":  "slot_capacity_exceeded",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-19",
+        "category":  "invalid_slot",
+        "user_input":  "Can I book a session at 11:30 PM at night on Monday Nov 2?",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02",
+                              "time":  "23:30",
+                              "slot_time":  "2026-11-02T23:30:00"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "outside_business_hours",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-20",
+        "category":  "invalid_slot",
+        "user_input":  "Check availability for yesterday 2026-10-26.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-10-26"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "past_date",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-21",
+        "category":  "invalid_slot",
+        "user_input":  "Check slots on Christmas Day 2026-12-25.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-12-25"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "holiday_closed",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-22",
+        "category":  "invalid_slot",
+        "user_input":  "I want to book on Sunday at 3:00 AM.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-08",
+                              "time":  "03:00",
+                              "slot_time":  "2026-11-08T03:00:00"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "outside_business_hours",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-23",
+        "category":  "trial_window",
+        "user_input":  "I want a trial session outside designated trial hours (e.g. 6:00 AM).",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Early Bird",
+                              "phone":  "+15552221111",
+                              "date":  "2026-11-02",
+                              "time":  "06:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-02T06:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "trial_window_restricted",
+        "should_succeed":  false,
+        "failure_reason":  "trial_window_restricted",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-24",
+        "category":  "trial_window",
+        "user_input":  "Book trial session during designated trial window (10:00 AM).",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Tim Wright",
+                              "phone":  "+15552222222",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-02T10:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "trial_window_valid",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-25",
+        "category":  "trial_window",
+        "user_input":  "Check trial session slots available on Monday Nov 2.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02",
+                              "appointment_type":  "trial_session"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-26",
+        "category":  "waitlist",
+        "user_input":  "The 6:00 PM class is full, please put me on the waitlist. Name: David Miller, phone: +15553331111, preferred 6:00 PM.",
+        "expected_tool":  "add_to_waitlist",
+        "expected_args":  {
+                              "caller_name":  "David Miller",
+                              "phone":  "+15553331111",
+                              "preferred_date":  "2026-11-02",
+                              "preferred_time":  "18:00",
+                              "appointment_type":  "hiit_class"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-27",
+        "category":  "waitlist",
+        "user_input":  "Can I check my waitlist status? My phone is +15553331111.",
+        "expected_tool":  "check_waitlist_status",
+        "expected_args":  {
+                              "phone":  "+15553331111"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-28",
+        "category":  "waitlist",
+        "user_input":  "Put me on the waitlist for past date 2026-10-25.",
+        "expected_tool":  "add_to_waitlist",
+        "expected_args":  {
+                              "caller_name":  "Past Person",
+                              "phone":  "+15553332222",
+                              "preferred_date":  "2026-10-25"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "past_date",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-29",
+        "category":  "waitlist",
+        "user_input":  "Put me on the waitlist for Christmas Day 2026-12-25.",
+        "expected_tool":  "add_to_waitlist",
+        "expected_args":  {
+                              "caller_name":  "Noel Holiday",
+                              "phone":  "+15553333333",
+                              "preferred_date":  "2026-12-25"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "holiday_closed",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-30",
+        "category":  "duplicate_booking",
+        "user_input":  "Caller already booked at Nov 2 10:00 AM tries to book again at same time.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Alex Smith",
+                              "phone":  "+15551234567",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-02T10:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "already_booked",
+        "should_succeed":  false,
+        "failure_reason":  "duplicate_booking",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-31",
+        "category":  "duplicate_booking",
+        "user_input":  "Waitlist duplicate: caller already on waitlist for Nov 2 joins again.",
+        "expected_tool":  "add_to_waitlist",
+        "expected_args":  {
+                              "caller_name":  "David Miller",
+                              "phone":  "+15553331111",
+                              "preferred_date":  "2026-11-02",
+                              "preferred_time":  "18:00"
+                          },
+        "context_type":  "already_on_waitlist",
+        "should_succeed":  false,
+        "failure_reason":  "duplicate_waitlist",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-32",
+        "category":  "duplicate_booking",
+        "user_input":  "Caller books at a different day/time without conflict.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Alex Smith",
+                              "phone":  "+15551234567",
+                              "date":  "2026-11-05",
+                              "time":  "14:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-05T14:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "different_time_ok",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-33",
+        "category":  "cancellation",
+        "user_input":  "I need to cancel my appointment for John Doe, phone +15551112222.",
+        "expected_tool":  "cancel_appointment",
+        "expected_args":  {
+                              "phone":  "+15551112222",
+                              "caller_name":  "John Doe",
+                              "booking_uid":  "mock-booking-uid-33"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-34",
+        "category":  "reschedule",
+        "user_input":  "Reschedule my session on Nov 2 to Nov 3 at 11:00 AM. Phone +15551234567.",
+        "expected_tool":  "reschedule_appointment",
+        "expected_args":  {
+                              "phone":  "+15551234567",
+                              "new_date":  "2026-11-03",
+                              "new_time":  "11:00",
+                              "booking_uid":  "mock-booking-uid-34",
+                              "new_slot_time":  "2026-11-03T11:00:00"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-35",
+        "category":  "cancellation",
+        "user_input":  "Cancel an appointment that does not exist for phone +15559998888.",
+        "expected_tool":  "cancel_appointment",
+        "expected_args":  {
+                              "phone":  "+15559998888",
+                              "booking_uid":  "non-existent-uid"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "not_found",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-36",
+        "category":  "reschedule",
+        "user_input":  "Reschedule appointment to a closed holiday 2026-12-25.",
+        "expected_tool":  "reschedule_appointment",
+        "expected_args":  {
+                              "phone":  "+15551234567",
+                              "new_date":  "2026-12-25",
+                              "new_time":  "10:00",
+                              "booking_uid":  "mock-booking-uid-36",
+                              "new_slot_time":  "2026-12-25T10:00:00"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "holiday_closed",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-37",
+        "category":  "faq",
+        "user_input":  "What are your gym membership plans and pricing?",
+        "expected_tool":  "get_office_info",
+        "expected_args":  {
+                              "topic":  "services"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-38",
+        "category":  "faq",
+        "user_input":  "What hours is your gym open on weekdays and weekends?",
+        "expected_tool":  "get_office_info",
+        "expected_args":  {
+                              "topic":  "hours"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-39",
+        "category":  "faq",
+        "user_input":  "Where is your gym located and what is your address?",
+        "expected_tool":  "get_office_info",
+        "expected_args":  {
+                              "topic":  "location"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-40",
+        "category":  "faq",
+        "user_input":  "Do you offer locker rooms, showers, or towel service?",
+        "expected_tool":  "get_office_info",
+        "expected_args":  {
+                              "topic":  "faqs"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-41",
+        "category":  "faq",
+        "user_input":  "Tell me everything about your gym amenities, hours, and rates.",
+        "expected_tool":  "get_office_info",
+        "expected_args":  {
+                              "topic":  "all"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-42",
+        "category":  "ambiguous_input",
+        "user_input":  "I want to book a class. (missing name, phone, date, time)",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-43",
+        "category":  "ambiguous_input",
+        "user_input":  "Can I come in sometime next week? (missing specific date/time)",
+        "expected_tool":  "get_week_slots",
+        "expected_args":  {
+                              "start_date":  "2026-11-02"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-44",
+        "category":  "ambiguous_input",
+        "user_input":  "Book a session for Alex without providing contact phone.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Alex",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "slot_time":  "2026-11-02T10:00:00",
+                              "appointment_type":  "trial_session"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "missing_phone",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-45",
+        "category":  "invalid_args",
+        "user_input":  "Malformed date format invalid-date-format passed to slot lookup.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "invalid-date-format"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "invalid_date_format",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-46",
+        "category":  "invalid_args",
+        "user_input":  "Malformed phone number not-a-phone passed to booking tool.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Bad Phone",
+                              "phone":  "not-a-phone",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "slot_time":  "2026-11-02T10:00:00",
+                              "appointment_type":  "trial_session"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "invalid_phone",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-47",
+        "category":  "invalid_args",
+        "user_input":  "Invalid appointment type space_flight passed to booking.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Astronaut",
+                              "phone":  "+15551234567",
+                              "date":  "2026-11-02",
+                              "time":  "10:00",
+                              "appointment_type":  "space_flight",
+                              "slot_time":  "2026-11-02T10:00:00"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  false,
+        "failure_reason":  "unknown_appointment_type",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-48",
+        "category":  "tool_failure",
+        "user_input":  "Database or service timeout during slot lookup recovers gracefully.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02"
+                          },
+        "context_type":  "simulated_service_error",
+        "should_succeed":  false,
+        "failure_reason":  "service_timeout_handled",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-49",
+        "category":  "tool_failure",
+        "user_input":  "Calendar API unavailable falls back to native scheduling.",
+        "expected_tool":  "book_appointment",
+        "expected_args":  {
+                              "caller_name":  "Grace Hopper",
+                              "phone":  "+15554445555",
+                              "date":  "2026-11-02",
+                              "time":  "14:00",
+                              "appointment_type":  "trial_session",
+                              "slot_time":  "2026-11-02T14:00:00",
+                              "provider_id":  "11111111-1111-1111-1111-111111111111"
+                          },
+        "context_type":  "gcal_unavailable_fallback",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-50",
+        "category":  "escalation",
+        "user_input":  "I am really frustrated with my billing and want to speak to a human manager right now.",
+        "expected_tool":  "escalate_to_human",
+        "expected_args":  {
+                              "reason":  "Customer angry about billing, demands manager",
+                              "caller_name":  "Angry Member",
+                              "phone":  "+15559876543"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  true
+    },
+    {
+        "id":  "EVAL-51",
+        "category":  "escalation",
+        "user_input":  "I hurt my knee on your squat rack and need immediate medical assistance or staff.",
+        "expected_tool":  "escalate_to_human",
+        "expected_args":  {
+                              "reason":  "Injury report on gym premises",
+                              "caller_name":  "Injured Caller",
+                              "phone":  "+15558765432"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  true
+    },
+    {
+        "id":  "EVAL-52",
+        "category":  "escalation",
+        "user_input":  "Can someone call me back tomorrow about corporate membership discounts?",
+        "expected_tool":  "send_callback_request",
+        "expected_args":  {
+                              "caller_name":  "Corp Lead",
+                              "phone":  "+15557654321",
+                              "reason":  "Corporate membership inquiry"
+                          },
+        "context_type":  "standard",
+        "should_succeed":  true,
+        "failure_reason":  null,
+        "staff_escalation":  true
+    },
+    {
+        "id":  "EVAL-53",
+        "category":  "cross_tenant_tool",
+        "user_input":  "Agent with Gym A context attempts to lookup appointments using Gym B tenant id parameter.",
+        "expected_tool":  "lookup_caller_appointments",
+        "expected_args":  {
+                              "phone":  "+15551234567",
+                              "tenant_id":  "22222222-2222-2222-2222-222222222222"
+                          },
+        "context_type":  "cross_tenant_injection",
+        "should_succeed":  false,
+        "failure_reason":  "tenant_boundary_enforced",
+        "staff_escalation":  false
+    },
+    {
+        "id":  "EVAL-54",
+        "category":  "cross_tenant_tool",
+        "user_input":  "Agent with Gym A context attempts to query Gym B trainer schedule directly.",
+        "expected_tool":  "get_available_slots",
+        "expected_args":  {
+                              "date":  "2026-11-02",
+                              "instructor_id":  "trainer-of-gym-b"
+                          },
+        "context_type":  "cross_tenant_trainer",
+        "should_succeed":  false,
+        "failure_reason":  "tenant_boundary_enforced",
+        "staff_escalation":  false
+    }
+]

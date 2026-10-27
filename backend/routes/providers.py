@@ -129,7 +129,7 @@ async def update_provider(
         raise HTTPException(status_code=400, detail="No fields to update.")
 
     try:
-        provider = await provider_service.update_provider(provider_id, update_data)
+        provider = await provider_service.update_provider(provider_id, update_data, tenant_id=current_user.id)
         if not provider:
             raise HTTPException(status_code=404, detail="Provider not found.")
         return provider
@@ -148,7 +148,7 @@ async def delete_provider(
     """Soft-delete (deactivate) a provider."""
     logger.info("[Providers] Deactivating provider %s for tenant=%s", provider_id, current_user.slug)
     try:
-        result = await provider_service.delete_provider(provider_id)
+        result = await provider_service.delete_provider(provider_id, tenant_id=current_user.id)
         if not result:
             raise HTTPException(status_code=404, detail="Provider not found.")
         return {"status": "deactivated", "provider_id": provider_id}
